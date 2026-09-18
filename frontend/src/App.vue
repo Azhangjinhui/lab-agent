@@ -1,7 +1,16 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
+<script setup lang="ts">
+
+
 </script>
 
+ 
 <template>
-  <HelloWorld />
+ <el-icon :size="'20'">
+  <edit></edit>
+ </el-icon>
 </template>
+
+<style scoped>
+
+</style>
+
