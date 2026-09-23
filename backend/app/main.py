@@ -1,5 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.exceptions import RequestValidationError
+from fastapi.staticfiles import StaticFiles
+from app.config import UPLOAD_DIR
 from app.database import SessionLocal, Base, engine
 from app.api import api
 from app.models.user import User
@@ -28,6 +30,7 @@ app.add_exception_handler(HTTPException, http_excpetion_hadler)
 app.add_exception_handler(RequestValidationError, validation_excpetion_hadler)
 # 全局的异常兜底，必须放在最后注册！！
 app.add_exception_handler(Exception, global_excpetion_hadler)
+app.mount("/upload", StaticFiles(directory=UPLOAD_DIR), name="upload")
 # 允许所有来源访问
 app.add_middleware(
 	CORSMiddleware,
