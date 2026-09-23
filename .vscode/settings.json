@@ -1,3 +1,22 @@
 {
-    "python.analysis.autoImportCompletions": true
+    "python.defaultInterpreterPath": "${workspaceFolder}\\backend\\.venv\\Scripts\\python.exe",
+    "python.analysis.extraPaths": [
+        "backend"
+    ],
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.indexing": true,
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportUnusedImport": "none"
+    },
+    "basedpyright.analysis.extraPaths": [
+        "backend"
+    ],
+    "basedpyright.analysis.diagnosticSeverityOverrides": {
+        "reportUnusedImport": "none"
+    },
+    "editor.quickSuggestions": {
+        "other": true,
+        "comments": false,
+        "strings": true
+    }
 }

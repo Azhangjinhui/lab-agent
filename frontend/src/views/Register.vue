@@ -129,7 +129,7 @@
         </form>
 
         <p class="login-link">
-          已有账号？<a href="/login" class="link">去登录</a>
+          已有账号？<router-link to="/login" class="link">去登录</router-link>
         </p>
       </div>
     </div>
@@ -138,6 +138,11 @@
 
 <script setup>
 import { ref, reactive, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
+import { registerApi } from '@/api/auth'
+
+const router = useRouter()
 
 const form = reactive({ account: '', password: '', confirmPassword: '' })
 const activeField = ref(null)
@@ -202,28 +207,39 @@ const passwordMismatch = computed(() => {
 })
 
 const handleRegister = async () => {
-  if (!form.account || !form.password || !form.confirmPassword) return
-  if (form.password !== form.confirmPassword) return
+  if (!form.account || !form.password || !form.confirmPassword) {
+    ElMessage.warning('请填写完整信息')
+    return
+  }
+  if (form.password !== form.confirmPassword) {
+    ElMessage.warning('两次输入的密码不一致')
+    return
+  }
+  if (form.password.length < 6) {
+    ElMessage.warning('密码长度不能少于6位')
+    return
+  }
 
   isLoading.value = true
   registerError.value = false
   registerSuccess.value = false
 
-  await new Promise(resolve => setTimeout(resolve, 1200))
-
-  if (form.password.length < 6) {
-    registerError.value = true
-    isLoading.value = false
-    setTimeout(() => { registerError.value = false }, 600)
-  } else {
+  try {
+    await registerApi({
+      username: form.account,
+      password: form.password,
+    })
     registerSuccess.value = true
-    isLoading.value = false
+    ElMessage.success('注册成功，请登录')
     setTimeout(() => {
-      registerSuccess.value = false
-      form.account = ''
-      form.password = ''
-      form.confirmPassword = ''
-    }, 2000)
+      router.push('/login')
+    }, 800)
+  } catch {
+    // 错误提示由 request.js 拦截器统一弹出，这里只做页面反馈
+    registerError.value = true
+    setTimeout(() => { registerError.value = false }, 600)
+  } finally {
+    isLoading.value = false
   }
 }
 </script>
