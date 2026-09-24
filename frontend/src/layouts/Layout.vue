@@ -23,19 +23,18 @@
         </div>
         <div style="display: flex; align-items: center">
           <el-dropdown>
-            <div style="display: flex; align-items: center; cursor: pointer">
+            <div style="display: flex; flex-direction: column; align-items: center; cursor: pointer">
               <img
-                src="@/assets/imgs/logo.png"
-                alt=""
+                :src="userInfo.avatar"
+                alt="图片未加载"
                 style="width: 30px; border-radius: 50%"
               />
-              <div style="margin-left: 3px">管理员</div>
+              <div style="margin-top: 3px">{{ userInfo?.name }}</div>
             </div>
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item @click="handleLogout()">退出登录</el-dropdown-item>
-                <el-dropdown-item>Action 2</el-dropdown-item>
-                <el-dropdown-item>Action 3</el-dropdown-item>
+                <el-dropdown-item @click="goProfile()">个人信息</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -79,12 +78,22 @@ import {
 } from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
 import { logout } from "../utils/auth";
+import { useUser } from "../utils/user";
+
+const { userInfo } = useUser()    
+
+
 
 const router = useRouter();
+
 
 function handleLogout() {
   logout()
   router.push("/login");
+}
+
+function goProfile() {
+  router.push("/manager/profile");
 }
 
 </script>

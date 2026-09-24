@@ -2,6 +2,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { getToken } from '@/utils/auth'
 
+
 const routes = [
   {
     path: '/',
@@ -31,6 +32,11 @@ const routes = [
         path: 'equ',
         name: 'Equ',
         component: () => import('@/views/Equ.vue'),
+      },
+      {
+        path: 'profile',
+        name: 'Profile',
+        component: () => import('@/views/Profile.vue'),
       },
     ]
   },
