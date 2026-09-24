@@ -38,6 +38,11 @@ const routes = [
         name: 'Profile',
         component: () => import('@/views/Profile.vue'),
       },
+      {
+        path: 'change-password',
+        name: 'ChangePassword',
+        component: () => import('@/views/ChangePassword.vue'),
+      },
     ]
   },
   {

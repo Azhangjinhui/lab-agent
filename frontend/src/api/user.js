@@ -22,5 +22,13 @@ export function updateUserInfo(data) {
         url:'/api/user/update',
         method:'put',
         data
+    })  
+}
+export function updatePasswordApi(data) {
+    return request({
+        url:'/api/user/updatepassword',
+        method:'put',
+        data
     })
 }
+

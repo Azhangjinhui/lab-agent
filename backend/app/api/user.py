@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from app.database import get_db
 from app.models.user import User
 from app.dependencies.auth import get_current_user
-from app.schemas.user import UserResponse
+from app.schemas.user import UserResponse, UserUpdatePasswordRequest
 from app.common.response import Response
 from app.services import user_service
 from app.schemas.user import UserUpdateRequest
@@ -24,3 +24,12 @@ def update_user_info(
     """更新当前用户信息"""
     res = user_service.update_user_info(db, current_user, data)
     return Response.success(data=res)
+@router.put("/updatepassword")
+def update_password(
+    data: UserUpdatePasswordRequest,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """修改当前用户密码"""
+    user_service.update_password(db, current_user, data)
+    return Response.success(message="密码修改成功")
